@@ -9,6 +9,12 @@ const App = () => {
   const [User, setUser] = useState(null);
   const authData = useContext(AuthContext);
 
+  // Initialize Local Storage Data once when app loads
+  useEffect(() => {
+    setLocalStorage();
+  }, []);
+
+  // Restore logged-in user from localStorage
   useEffect(() => {
     const loggedInUser = localStorage.getItem("loggedInUser");
     if (loggedInUser) {
@@ -17,6 +23,7 @@ const App = () => {
     }
   }, [authData]);
 
+  // Login Logic 
   const handleLogin = (email, password) => {
     if (email === "admin@me.com" && password === "123") {
       setUser("admin");
@@ -33,7 +40,7 @@ const App = () => {
       alert("Invalid Credentials");
     }
   };
-
+ 
   return (
     <>
       {!User && <Login handleLogin={handleLogin} />}
